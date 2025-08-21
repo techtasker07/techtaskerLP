@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "../components/ui/button"
+import { Badge } from "../components/ui/badge"
 import { Calendar, Video, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { MeetingForm } from "@/components/meeting-form"
+import { MeetingForm } from "../components/meeting-form"
 
 export default function HomePage() {
   return (

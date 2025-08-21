@@ -1,8 +1,8 @@
 "use server"
 
-import { createClient } from "@/lib/supabase/server"
+import { createClient } from "../lib/supabase/server"
 import { revalidatePath } from "next/cache"
-import { sendMeetingNotificationEmails } from "@/lib/email/resend"
+import { sendMeetingNotificationEmails } from "../lib/email/resend"
 
 export interface MeetingFormData {
   firstName: string
