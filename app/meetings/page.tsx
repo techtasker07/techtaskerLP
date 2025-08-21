@@ -1,5 +1,5 @@
-import { MeetingLink } from "../components/meeting-link"
-import { Button } from "../components/ui/button"
+import { MeetingLink } from "@/components/meeting-link"
+import { Button } from "@/components/ui/button"
 import { ArrowLeft, Code } from "lucide-react"
 import Link from "next/link"
 

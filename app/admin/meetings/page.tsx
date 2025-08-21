@@ -1,10 +1,26 @@
-import { createClient } from "../lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Badge } from "../components/ui/badge"
-import { Button } from "../components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Calendar, User, Mail, Phone, Video, ExternalLink } from "lucide-react"
 import Link from "next/link"
+
+// Define the Meeting type interface
+interface Meeting {
+  id: string
+  first_name: string
+  last_name: string
+  email: string
+  phone?: string
+  company?: string
+  service_interest?: string
+  message?: string
+  meeting_status: 'pending' | 'scheduled' | 'completed' | 'cancelled'
+  meeting_date?: string
+  jitsi_room_id: string
+  created_at: string
+}
 
 export default async function AdminMeetingsPage() {
   const supabase = await createClient()
@@ -17,7 +33,7 @@ export default async function AdminMeetingsPage() {
     redirect("/auth/login")
   }
 
-  // Fetch all meetings
+  // Fetch all meetings with proper typing
   const { data: meetings, error } = await supabase
     .from("meetings")
     .select("*")
@@ -28,7 +44,10 @@ export default async function AdminMeetingsPage() {
     return <div>Error loading meetings</div>
   }
 
-  const getStatusColor = (status: string) => {
+  // Type the meetings array
+  const typedMeetings = meetings as Meeting[] | null
+
+  const getStatusColor = (status: Meeting['meeting_status']) => {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-800 border-yellow-200"
@@ -52,7 +71,7 @@ export default async function AdminMeetingsPage() {
         </div>
 
         <div className="grid gap-6">
-          {meetings?.map((meeting) => (
+          {typedMeetings?.map((meeting: Meeting) => (
             <Card key={meeting.id} className="border-border">
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -135,7 +154,7 @@ export default async function AdminMeetingsPage() {
             </Card>
           ))}
 
-          {meetings?.length === 0 && (
+          {typedMeetings?.length === 0 && (
             <Card className="border-border">
               <CardContent className="text-center py-12">
                 <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
