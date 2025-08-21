@@ -45,27 +45,7 @@ export default function HomePage() {
             >
               Testimonials
             </Link>
-            <Link
-              href="/meetings"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Join Meeting
-            </Link>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <Link href="/meetings" className="hidden sm:block">
-              <Button variant="outline" size="sm">
-                <Video className="mr-2 h-4 w-4" />
-                Join Meeting
-              </Button>
-            </Link>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Calendar className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Book a Meeting</span>
-              <span className="sm:hidden">Book</span>
-            </Button>
-          </div>
+            </nav>
         </div>
       </header>
 
@@ -73,7 +53,7 @@ export default function HomePage() {
       <section className="relative py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DALL%C2%B7E-2024-03-31-19.24.50-Create-a-sophisticated-and-dynamic-thumbnail-for-a-websites-course-page-on-an-Advanced-Digital-Marketing-Program-perfect-for-wide-rectangular-use-as-1024x585-wVNYan2rEpNlcWlgDWcJxWlcrUplYb.png"
+            src="https://imageio.forbes.com/specials-images/imageserve/61d52d4e3a76ed81ac034ea8/The-10-Tech-Trends-That-Will-Transform-Our-World/960x0.jpg?height=399&width=711&fit=bounds"
             alt="Advanced Digital Marketing Technology"
             fill
             className="object-cover object-center"
@@ -87,7 +67,7 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto text-center">
             <Badge
               variant="secondary"
-              className="mb-6 bg-accent/20 text-accent-foreground border-accent/30 backdrop-blur-sm"
+              className="mb-6 bg-primary/50 text-accent-foreground border-accent/30 backdrop-blur-sm"
             >
               African Excellence in Technology
             </Badge>
@@ -108,7 +88,7 @@ export default function HomePage() {
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg shadow-lg"
               >
                 <Calendar className="mr-2 h-5 w-5" />
-                Schedule Consultation
+                Schedule Meeting
               </Button>
               <Link href="/meetings">
                 <Button
@@ -117,7 +97,7 @@ export default function HomePage() {
                   className="border-primary/60 text-foreground hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg bg-background/80 backdrop-blur-sm shadow-lg"
                 >
                   <Video className="mr-2 h-5 w-5" />
-                  Join Virtual Meeting
+                  Join Meeting
                 </Button>
               </Link>
             </div>
@@ -223,7 +203,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <Badge variant="secondary" className="mb-4 bg-accent/10 text-accent-foreground border-accent/20">
+              <Badge variant="secondary" className="mb-4 bg-accent/10 text-primary border-accent/20">
                 Book a Consultation
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Ready to Transform Your Business?</h2>

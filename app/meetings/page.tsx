@@ -2,6 +2,7 @@ import { MeetingLink } from "@/components/meeting-link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Code } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function MeetingsPage() {
   return (
@@ -9,12 +10,17 @@ export default function MeetingsPage() {
       {/* Header */}
       <header className="border-b border-border bg-background">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <Code className="h-5 w-5 text-primary-foreground" />
-            </div>
+          {/* Updated header to use logo and proper navigation links */}
+          <Link href="/" className="flex items-center space-x-3">
+            <Image
+              src="/images/techtasker-logo.png"
+              alt="Techtasker Solutions"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
             <span className="text-xl font-bold text-foreground">Techtasker Solutions</span>
-          </div>
+          </Link>
           <Link href="/">
             <Button variant="ghost">
               <ArrowLeft className="w-4 h-4 mr-2" />

@@ -11,17 +11,47 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar, CheckCircle, AlertCircle } from "lucide-react"
 import { createMeetingRequest, type MeetingFormData } from "@/lib/actions/meetings"
 
+// African countries with their calling codes
+const AFRICAN_COUNTRIES = [
+  { name: "Nigeria", code: "+234" },
+  { name: "South Africa", code: "+27" },
+  { name: "Kenya", code: "+254" },
+  { name: "Ghana", code: "+233" },
+  { name: "Egypt", code: "+20" },
+  { name: "Morocco", code: "+212" },
+  { name: "Ethiopia", code: "+251" },
+  { name: "Tanzania", code: "+255" },
+  { name: "Uganda", code: "+256" },
+  { name: "Algeria", code: "+213" },
+  { name: "Tunisia", code: "+216" },
+  { name: "Cameroon", code: "+237" },
+  { name: "Ivory Coast", code: "+225" },
+  { name: "Senegal", code: "+221" },
+  { name: "Zimbabwe", code: "+263" },
+  { name: "Zambia", code: "+260" },
+  { name: "Botswana", code: "+267" },
+  { name: "Rwanda", code: "+250" },
+  { name: "Namibia", code: "+264" },
+  { name: "Mozambique", code: "+258" }
+]
+
+interface ExtendedMeetingFormData extends MeetingFormData {
+  country: string
+}
+
 export function MeetingForm() {
-  const [formData, setFormData] = useState<MeetingFormData>({
+  const [formData, setFormData] = useState<ExtendedMeetingFormData>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
+    country: "",
     company: "",
     serviceInterest: "",
     message: "",
   })
 
+  const [phoneCode, setPhoneCode] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null
@@ -30,10 +60,23 @@ export function MeetingForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    
+    // Handle country selection and phone code update
+    if (name === "country") {
+      const selectedCountry = AFRICAN_COUNTRIES.find(country => country.name === value)
+      setPhoneCode(selectedCountry ? selectedCountry.code : "")
+      // Clear phone number when country changes
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+        phone: "",
+      }))
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +85,13 @@ export function MeetingForm() {
     setSubmitStatus({ type: null, message: "" })
 
     try {
-      const result = await createMeetingRequest(formData)
+      // Combine phone code with phone number for submission
+      const submissionData = {
+        ...formData,
+        phone: phoneCode && formData.phone ? `${phoneCode} ${formData.phone}` : formData.phone,
+      }
+      
+      const result = await createMeetingRequest(submissionData)
 
       if (result.success) {
         setSubmitStatus({
@@ -55,10 +104,12 @@ export function MeetingForm() {
           lastName: "",
           email: "",
           phone: "",
+          country: "",
           company: "",
           serviceInterest: "",
           message: "",
         })
+        setPhoneCode("")
       } else {
         setSubmitStatus({
           type: "error",
@@ -144,15 +195,42 @@ export function MeetingForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="country">Country</Label>
+              <select
+                id="country"
+                name="country"
+                value={formData.country}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground disabled:opacity-50"
+                disabled={isSubmitting}
+              >
+                <option value="">Select your country</option>
+                {AFRICAN_COUNTRIES.map((country) => (
+                  <option key={country.name} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <div className="flex">
+              {phoneCode && (
+                <div className="flex items-center px-3 py-2 border border-r-0 border-input rounded-l-md bg-muted text-muted-foreground">
+                  {phoneCode}
+                </div>
+              )}
               <Input
                 id="phone"
                 name="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder="+1 (555) 123-4567"
-                disabled={isSubmitting}
+                placeholder={phoneCode ? "7011223344" : "Select country first"}
+                disabled={isSubmitting || !phoneCode}
+                className={phoneCode ? "rounded-l-none border-l-0" : ""}
               />
             </div>
           </div>
