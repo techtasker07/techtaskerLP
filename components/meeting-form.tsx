@@ -3,13 +3,13 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Button } from "../components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Input } from "../components/ui/input"
-import { Label } from "../components/ui/label"
-import { Textarea } from "../components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Calendar, CheckCircle, AlertCircle } from "lucide-react"
-import { createMeetingRequest, type MeetingFormData } from "../lib/actions/meetings"
+import { createMeetingRequest, type MeetingFormData } from "@/lib/actions/meetings"
 
 export function MeetingForm() {
   const [formData, setFormData] = useState<MeetingFormData>({

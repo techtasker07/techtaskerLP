@@ -6,22 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Calendar, User, Mail, Phone, Video, ExternalLink } from "lucide-react"
 import Link from "next/link"
 
-// Define the Meeting type interface
-interface Meeting {
-  id: string
-  first_name: string
-  last_name: string
-  email: string
-  phone?: string
-  company?: string
-  service_interest?: string
-  message?: string
-  meeting_status: 'pending' | 'scheduled' | 'completed' | 'cancelled'
-  meeting_date?: string
-  jitsi_room_id: string
-  created_at: string
-}
-
 export default async function AdminMeetingsPage() {
   const supabase = await createClient()
 
@@ -33,7 +17,7 @@ export default async function AdminMeetingsPage() {
     redirect("/auth/login")
   }
 
-  // Fetch all meetings with proper typing
+  // Fetch all meetings
   const { data: meetings, error } = await supabase
     .from("meetings")
     .select("*")
@@ -44,10 +28,7 @@ export default async function AdminMeetingsPage() {
     return <div>Error loading meetings</div>
   }
 
-  // Type the meetings array
-  const typedMeetings = meetings as Meeting[] | null
-
-  const getStatusColor = (status: Meeting['meeting_status']) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-800 border-yellow-200"
@@ -71,7 +52,7 @@ export default async function AdminMeetingsPage() {
         </div>
 
         <div className="grid gap-6">
-          {typedMeetings?.map((meeting: Meeting) => (
+          {meetings?.map((meeting) => (
             <Card key={meeting.id} className="border-border">
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -154,7 +135,7 @@ export default async function AdminMeetingsPage() {
             </Card>
           ))}
 
-          {typedMeetings?.length === 0 && (
+          {meetings?.length === 0 && (
             <Card className="border-border">
               <CardContent className="text-center py-12">
                 <Calendar className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
